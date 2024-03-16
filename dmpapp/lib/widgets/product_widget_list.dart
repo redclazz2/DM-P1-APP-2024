@@ -13,7 +13,7 @@ class ProductWidgetList extends StatelessWidget {
         Container(
             margin: const EdgeInsets.all(1),
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(15.0),
               child: Row(children: [
                 Container(
                     width: 100,
