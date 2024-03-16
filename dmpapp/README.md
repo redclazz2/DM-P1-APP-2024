@@ -1,3 +1,3 @@
 # dmpapp
 
-A new Flutter project.
+Front end. Parcial Desarrollo Movil.
