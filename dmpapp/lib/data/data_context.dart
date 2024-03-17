@@ -65,4 +65,14 @@ class DataContext{
       image: "assets/images/product.jpg"
     )];
   }
+
+  Future<List<Product>> getFavorites() async{
+    return [Product(
+      id: 0,
+      name: "Splatoon 3",
+      seller: "Nintendo",
+      rating: 4.0,
+      image: "assets/images/product.jpg"
+    )];
+  }
 }

@@ -1,4 +1,4 @@
-import 'package:dmpapp/views/products_general.dart';
+import 'package:dmpapp/views/products_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget {
