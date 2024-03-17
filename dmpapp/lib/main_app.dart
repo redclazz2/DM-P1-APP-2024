@@ -7,7 +7,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const LoginView(),
+      home: LoginView(),
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: const ColorScheme.dark(
