@@ -1,7 +1,8 @@
-import 'package:dmpapp/data/data_context.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/products_builders/products_builders.dart';
+
+import '../../libraries/data_lib.dart' as data_lib;
+
 
 class ProductView extends StatefulWidget {
   const ProductView({super.key});
@@ -11,7 +12,6 @@ class ProductView extends StatefulWidget {
 }
 
 class _ProductViewState extends State<ProductView> {
-  final DataContext dataContext = DataContext();
   String title = "Featured";
   int draw = -1;
   int fromFavorites = -1;
@@ -49,14 +49,15 @@ class _ProductViewState extends State<ProductView> {
           ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
+                data_lib.usersDB.deleteUserToken();
               },
               child: const Icon(Icons.logout))
         ],
       ),
       body: FutureBuilder(
           future: (fromFavorites == -1)
-              ? dataContext.getProducts()
-              : dataContext.getFavorites(),
+              ? data_lib.dataContext.getProducts()
+              : data_lib.dataContext.getFavorites(),
           builder: (context, snapshot) => snapshot.hasData
               ? (draw == -1)
                   ? ProductsWidgetList(products: snapshot.data!)

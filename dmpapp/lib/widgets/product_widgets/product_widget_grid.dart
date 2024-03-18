@@ -11,11 +11,13 @@ class ProductWidgetGrid extends StatelessWidget {
     return Column(
       children: [
         Container(
+            width: 150,
+            height: 350,
             decoration:
                 BoxDecoration(shape: BoxShape.rectangle, border: Border.all()),
             margin: const EdgeInsets.all(10),
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10),
               child: Column(children: [
                 Container(
                     width: 125,
@@ -35,12 +37,15 @@ class ProductWidgetGrid extends StatelessWidget {
                           children: [
                             Text(                             
                               product.name,
+                              textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(
+                              textAlign: TextAlign.center,
                               product.seller,                         
                             ),
                             Text(
+                              textAlign: TextAlign.center,
                               product.rating.toString(),                              
                               style: TextStyle(
                                   color: product.rating >= 3.5

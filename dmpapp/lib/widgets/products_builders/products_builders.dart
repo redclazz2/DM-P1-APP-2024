@@ -30,7 +30,9 @@ class ProductsWidgetGrid extends ProductsWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Center(
-      child: Wrap(children: [
+      child: Wrap(
+        spacing: 2,
+        children: [
         for (var i = 0; i < products.length; i++)
           ProductWidgetGrid(product: products[i])
       ]),

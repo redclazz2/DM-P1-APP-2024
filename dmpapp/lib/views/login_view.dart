@@ -1,4 +1,3 @@
-import 'package:dmpapp/data/data_context.dart';
 import 'package:dmpapp/views/products_view.dart';
 import 'package:flutter/material.dart';
 import '../libraries/data_lib.dart' as data_lib;
@@ -16,6 +15,8 @@ class LoginView extends StatelessWidget {
     data_lib.dataContext.loginUser(context, mail, password).then((response) => {
           if (response.statusCode == 200)
             {
+              data_lib.usersDB.insertUserToken(token: response.body),
+
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const ProductView()))
             }
