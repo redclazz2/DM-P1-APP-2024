@@ -12,7 +12,7 @@ class ProductWidgetGrid extends StatelessWidget {
       children: [
         Container(
             width: 150,
-            height: 350,
+            height: 335,
             decoration:
                 BoxDecoration(shape: BoxShape.rectangle, border: Border.all()),
             margin: const EdgeInsets.all(10),
