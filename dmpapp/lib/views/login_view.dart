@@ -51,7 +51,6 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     data_lib.usersDB.validateTokenDate().then(
       (value){
         if(value){

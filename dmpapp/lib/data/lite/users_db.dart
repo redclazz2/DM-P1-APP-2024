@@ -3,57 +3,63 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../libraries/data_lib.dart' as data_lib;
 
-class UsersDB{
+class UsersDB {
   final tableName = "user";
 
-  Future<void> createUserTable(Database database) async{
+  Future<void> createUserTable(Database database) async {
     await database.execute("""
       CREATE TABLE IF NOT EXISTS $tableName(
         "id" INTEGER NOT NULL,
         "token" TEXT NOT NULL,
         PRIMARY KEY ("id")
-      );"""
-    );
+      );""");
   }
 
-  Future<int> insertUserToken({required String token}) async{
+  Future<int> insertUserToken({required String token}) async {
     final database = await data_lib.liteContext.dataBase;
 
     return await database.rawInsert('''
     INSERT INTO $tableName (token) VALUES (?)
-    ''',[token]);
+    ''', [token]);
   }
 
-  Future<User> fetchUserToken() async{
+  Future<User> fetchUserToken() async {
     final database = await data_lib.liteContext.dataBase;
 
     final user = await database.rawQuery('''
     SELECT * FROM $tableName''');
-    return user.map((luser) => User.fromSqfliteDatabase(luser)).first;
+
+    try {
+      return user.map((luser) => User.fromSqfliteDatabase(luser)).first;
+    } catch (e) {
+      return User(token: "");
+    }
   }
 
-  Future<String> getUserToken() async{
+  Future<String> getUserToken() async {
     String token = "";
 
-    await data_lib.usersDB.fetchUserToken().then(
-    (user){
+    await data_lib.usersDB.fetchUserToken().then((user) {
       token = user.token;
     });
 
     return token;
   }
 
-  Future<bool> validateTokenDate() async{
+  Future<bool> validateTokenDate() async {
     String token = await data_lib.usersDB.getUserToken();
+    try {
+      if (JwtDecoder.isExpired(token)) {
+        return false;
+      }
 
-    if(JwtDecoder.isExpired(token)){
+      return true;
+    } catch (e) {
       return false;
     }
-
-    return true;
   }
 
-  Future<void> deleteUserToken() async{
+  Future<void> deleteUserToken() async {
     final database = await data_lib.liteContext.dataBase;
 
     await database.rawDelete('''
