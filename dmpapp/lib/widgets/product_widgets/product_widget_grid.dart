@@ -20,8 +20,8 @@ class ProductWidgetGrid extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Column(children: [
                 SizedBox(
-                  width: 100,
-                  height: 100,
+                  width: 125,
+                  height: 125,
                   child: Image.network(
                     product.image,
                     errorBuilder: (context, error, stackTrace) =>

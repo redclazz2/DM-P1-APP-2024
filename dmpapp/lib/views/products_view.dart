@@ -3,7 +3,6 @@ import '../widgets/products_builders/products_builders.dart';
 
 import '../../libraries/data_lib.dart' as data_lib;
 
-
 class ProductView extends StatefulWidget {
   const ProductView({super.key});
 
@@ -45,13 +44,15 @@ class _ProductViewState extends State<ProductView> {
                   draw *= -1;
                 });
               },
-              child: const Icon(Icons.view_comfy)),
+              child: const Icon(Icons.view_comfy,
+                  color: Color.fromARGB(255, 69, 133, 136))),
           ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.popAndPushNamed(context, "/login");
                 data_lib.usersDB.deleteUserToken();
               },
-              child: const Icon(Icons.logout))
+              child: Icon(Icons.logout,
+                  color: Theme.of(context).colorScheme.error))
         ],
       ),
       body: FutureBuilder(

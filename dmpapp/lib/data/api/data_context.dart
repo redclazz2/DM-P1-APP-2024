@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:dmpapp/models/product.dart';
 import 'package:http/http.dart' as http;
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../libraries/data_lib.dart' as data_lib;
 
@@ -47,13 +48,34 @@ class DataContext {
   }
 
   Future<List<Product>> getFavorites() async {
-    return [
-      Product(
-          id: 0,
-          name: "Splatoon 3",
-          seller: "Nintendo",
-          rating: 4.0,
-          image: "assets/images/product.jpg")
-    ];
+    List<Product> data = [];
+    String token = await data_lib.usersDB.getUserToken();
+    String roleKey = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+    Map<String,dynamic> decodedToken = JwtDecoder.decode(token);
+
+    try {
+      final http.Response respuesta =
+          await http.get(Uri.parse("${url}api/Products/${decodedToken[roleKey]}"), headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization':
+            'bearer $token'
+      });
+
+      List<dynamic> jsonDecoded = await json.decode(respuesta.body);
+
+      for (var p in jsonDecoded) {
+        data.add(
+          Product(
+              id: p["id"],
+              name: p["name"],
+              seller: p["seller"],
+              rating: (p["rating"] as num).toDouble(),
+              image: "$url${p["image"]}"
+              ));
+      }
+    } catch (e) {
+      data = [];
+    }
+    return data;
   }
 }
