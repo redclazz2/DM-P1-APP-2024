@@ -51,8 +51,12 @@ class ProductWidgetList extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () {},
                           child: Icon(
-                            Icons.star,
-                            color: Theme.of(context).colorScheme.secondary,
+                            product.isFavorite
+                                ? Icons.not_interested
+                                : Icons.star,
+                            color: product.isFavorite
+                                ? Theme.of(context).colorScheme.error
+                                : Theme.of(context).colorScheme.secondary,
                           ),
                         )
                       ],

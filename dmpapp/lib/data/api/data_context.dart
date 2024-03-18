@@ -38,7 +38,8 @@ class DataContext {
               name: p["name"],
               seller: p["seller"],
               rating: (p["rating"] as num).toDouble(),
-              image: "$url${p["image"]}"
+              image: "$url${p["image"]}",
+              isFavorite: false
               ));
       }
     } catch (e) {
@@ -70,7 +71,8 @@ class DataContext {
               name: p["name"],
               seller: p["seller"],
               rating: (p["rating"] as num).toDouble(),
-              image: "$url${p["image"]}"
+              image: "$url${p["image"]}",
+              isFavorite: true
               ));
       }
     } catch (e) {

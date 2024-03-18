@@ -4,6 +4,7 @@ class Product{
   final String seller;
   final double rating;
   final String image;
+  final bool isFavorite;
 
   Product(
     {
@@ -11,7 +12,8 @@ class Product{
       required this.name,
       required this.seller,
       required this.rating,
-      required this.image
+      required this.image,
+      required this.isFavorite,
     }
   );
 }

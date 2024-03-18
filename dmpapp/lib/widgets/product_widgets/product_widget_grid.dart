@@ -36,18 +36,18 @@ class ProductWidgetGrid extends StatelessWidget {
                         padding: const EdgeInsets.all(8),
                         child: Column(
                           children: [
-                            Text(                             
+                            Text(
                               product.name,
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(
                               textAlign: TextAlign.center,
-                              product.seller,                         
+                              product.seller,
                             ),
                             Text(
                               textAlign: TextAlign.center,
-                              product.rating.toString(),                              
+                              product.rating.toString(),
                               style: TextStyle(
                                   color: product.rating >= 3.5
                                       ? Theme.of(context).colorScheme.primary
@@ -56,8 +56,12 @@ class ProductWidgetGrid extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () {},
                               child: Icon(
-                                Icons.star,
-                                color: Theme.of(context).colorScheme.secondary,
+                                product.isFavorite
+                                    ? Icons.not_interested
+                                    : Icons.star,
+                                color: product.isFavorite
+                                    ? Theme.of(context).colorScheme.error
+                                    : Theme.of(context).colorScheme.secondary,
                               ),
                             )
                           ],
