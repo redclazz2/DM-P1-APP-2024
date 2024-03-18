@@ -20,10 +20,7 @@ class _ProductViewState extends State<ProductView> {
     data_lib.usersDB.deleteUserToken();
   }
 
-  @override
-  void initState(){
-    super.initState();
-
+  void handleTokenValidation(){
     data_lib.usersDB.validateTokenDate().then(
       (value){
         if(!value){
@@ -31,6 +28,12 @@ class _ProductViewState extends State<ProductView> {
         }
       }
     );
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    handleTokenValidation();
   }
 
   @override
@@ -49,6 +52,7 @@ class _ProductViewState extends State<ProductView> {
                 } else {
                   title = "Featured";
                 }
+                handleTokenValidation();
               });
             },
             child: Icon(
@@ -60,6 +64,7 @@ class _ProductViewState extends State<ProductView> {
               onPressed: () {
                 setState(() {
                   draw *= -1;
+                  handleTokenValidation();
                 });
               },
               child: const Icon(Icons.view_comfy,
