@@ -19,14 +19,15 @@ class ProductWidgetGrid extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(children: [
-                Container(
-                    width: 125,
-                    height: 125,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        image: DecorationImage(
-                            image: AssetImage(product.image),
-                            fit: BoxFit.cover))),
+                SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: Image.network(
+                    product.image,
+                    errorBuilder: (context, error, stackTrace) =>
+                        Image.asset("assets/images/product.jpg"),
+                  ),
+                ),
                 Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,

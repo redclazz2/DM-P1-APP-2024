@@ -1,5 +1,6 @@
 import 'package:dmpapp/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ProductWidgetList extends StatelessWidget {
   final Product product;
@@ -15,14 +16,15 @@ class ProductWidgetList extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Row(children: [
-                Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        image: DecorationImage(
-                            image: AssetImage(product.image),
-                            fit: BoxFit.cover))),
+                SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: Image.network(
+                    product.image,
+                    errorBuilder: (context, error, stackTrace) =>
+                        Image.asset("assets/images/product.jpg"),
+                  ),
+                ),
                 Column(children: [
                   Padding(
                     padding: const EdgeInsets.all(8),
