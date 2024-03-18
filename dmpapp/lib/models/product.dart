@@ -16,4 +16,14 @@ class Product{
       required this.isFavorite,
     }
   );
+
+  factory Product.fromSqfliteDatabase(Map<String,dynamic> map) =>
+    Product(
+      id: map['id'] ?? "",
+      name: map['name'] ?? "",
+      seller: map['seller'] ?? "",
+      rating: (map["rating"]).toDouble(),
+      image: map['image'] ?? "",
+      isFavorite: map['isFavorite'] == 1 ? true : false,
+    );
 }

@@ -33,7 +33,8 @@ class LiteContext{
     return database;
   }
 
-  Future<void> create(Database database, int version)
-    async => await data_lib.usersDB.createUserTable(database);
-
+  Future<void> create(Database database, int version)async { 
+    await data_lib.usersDB.createUserTable(database);
+    await data_lib.favoritesDB.createFavoritesTable(database);
+  } 
 }

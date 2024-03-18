@@ -18,6 +18,7 @@ class _ProductViewState extends State<ProductView> {
   void handleLogOut() {
     Navigator.popAndPushNamed(context, "/login");
     data_lib.usersDB.deleteUserToken();
+    data_lib.favoritesDB.deleteFavorites();
   }
 
   void handleTokenValidation(){
@@ -34,6 +35,8 @@ class _ProductViewState extends State<ProductView> {
   void initState(){
     super.initState();
     handleTokenValidation();
+
+    data_lib.favoritesDB.handleFavoriteProducts();
   }
 
   @override
@@ -80,7 +83,7 @@ class _ProductViewState extends State<ProductView> {
       body: FutureBuilder(
           future: (fromFavorites == -1)
               ? data_lib.dataContext.getProducts()
-              : data_lib.dataContext.getFavorites(),
+              : data_lib.favoritesDB.fetchFavoriteProducts(),
           builder: (context, snapshot) => snapshot.hasData
               ? (draw == -1)
                   ? ProductsWidgetList(products: snapshot.data!)
