@@ -1,6 +1,5 @@
 import 'package:dmpapp/models/product.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProductWidgetList extends StatelessWidget {
   final Product product;
