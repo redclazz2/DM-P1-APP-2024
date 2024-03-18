@@ -15,6 +15,24 @@ class _ProductViewState extends State<ProductView> {
   int draw = -1;
   int fromFavorites = -1;
 
+  void handleLogOut() {
+    Navigator.popAndPushNamed(context, "/login");
+    data_lib.usersDB.deleteUserToken();
+  }
+
+  @override
+  void initState(){
+    super.initState();
+
+    data_lib.usersDB.validateTokenDate().then(
+      (value){
+        if(!value){
+          handleLogOut();
+        }
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +66,7 @@ class _ProductViewState extends State<ProductView> {
                   color: Color.fromARGB(255, 69, 133, 136))),
           ElevatedButton(
               onPressed: () {
-                Navigator.popAndPushNamed(context, "/login");
-                data_lib.usersDB.deleteUserToken();
+                handleLogOut();
               },
               child: Icon(Icons.logout,
                   color: Theme.of(context).colorScheme.error))

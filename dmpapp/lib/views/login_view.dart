@@ -1,6 +1,5 @@
 import 'package:dmpapp/views/products_view.dart';
 import 'package:flutter/material.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import '../libraries/data_lib.dart' as data_lib;
 
 class LoginView extends StatelessWidget {
@@ -50,19 +49,10 @@ class LoginView extends StatelessWidget {
         });
   }
 
-  Future<bool> handleTokenInit() async{
-    String token = await data_lib.usersDB.getUserToken();
-    if(JwtDecoder.isExpired(token)){
-      return false;
-    }
-
-    return true;
-  }
-
   @override
   Widget build(BuildContext context) {
     
-    handleTokenInit().then(
+    data_lib.usersDB.validateTokenDate().then(
       (value){
         if(value){
           Navigator.pushReplacement(context,

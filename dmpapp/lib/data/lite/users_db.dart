@@ -1,4 +1,5 @@
 import 'package:dmpapp/models/user.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../libraries/data_lib.dart' as data_lib;
 
@@ -40,6 +41,16 @@ class UsersDB{
     });
 
     return token;
+  }
+
+  Future<bool> validateTokenDate() async{
+    String token = await data_lib.usersDB.getUserToken();
+
+    if(JwtDecoder.isExpired(token)){
+      return false;
+    }
+
+    return true;
   }
 
   Future<void> deleteUserToken() async{
