@@ -1,10 +1,8 @@
-import 'package:dmpapp/models/product.dart';
+import 'package:dmpapp/widgets/product_widgets/product_widget.dart';
 import 'package:flutter/material.dart';
 
-class ProductWidgetList extends StatelessWidget {
-  final Product product;
-
-  const ProductWidgetList({required this.product, super.key});
+class ProductWidgetList extends ProductWidget {
+  const ProductWidgetList({required super.product, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,20 +41,15 @@ class ProductWidgetList extends StatelessWidget {
                           product.rating.toString(),
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                              color: product.rating >= 3.5
+                              color: product.rating >= colorRatingLimit
                                   ? Theme.of(context).colorScheme.primary
                                   : Theme.of(context).colorScheme.error),
                         ),
                         ElevatedButton(
-                          onPressed: () {},
-                          child: Icon(
-                            product.isFavorite
-                                ? Icons.not_interested
-                                : Icons.star,
-                            color: product.isFavorite
-                                ? Theme.of(context).colorScheme.error
-                                : Theme.of(context).colorScheme.secondary,
-                          ),
+                          onPressed: () {
+                            onFavoriteButtonPressed();
+                          },
+                          child: setButtonIcon(context),
                         )
                       ],
                     ),

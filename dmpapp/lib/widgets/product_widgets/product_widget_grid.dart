@@ -1,10 +1,8 @@
-import 'package:dmpapp/models/product.dart';
+import 'package:dmpapp/widgets/product_widgets/product_widget.dart';
 import 'package:flutter/material.dart';
 
-class ProductWidgetGrid extends StatelessWidget {
-  final Product product;
-
-  const ProductWidgetGrid({required this.product, super.key});
+class ProductWidgetGrid extends ProductWidget {
+  const ProductWidgetGrid({required super.product, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,20 +47,15 @@ class ProductWidgetGrid extends StatelessWidget {
                               textAlign: TextAlign.center,
                               product.rating.toString(),
                               style: TextStyle(
-                                  color: product.rating >= 3.5
+                                  color: product.rating >= colorRatingLimit
                                       ? Theme.of(context).colorScheme.primary
                                       : Theme.of(context).colorScheme.error),
                             ),
                             ElevatedButton(
-                              onPressed: () {},
-                              child: Icon(
-                                product.isFavorite
-                                    ? Icons.not_interested
-                                    : Icons.star,
-                                color: product.isFavorite
-                                    ? Theme.of(context).colorScheme.error
-                                    : Theme.of(context).colorScheme.secondary,
-                              ),
+                              onPressed: () {
+                                onFavoriteButtonPressed();
+                              },
+                              child: setButtonIcon(context),
                             )
                           ],
                         ),

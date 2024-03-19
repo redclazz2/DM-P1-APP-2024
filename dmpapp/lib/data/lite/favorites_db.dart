@@ -23,13 +23,19 @@ class FavoritesDB {
     return await database.rawInsert('''
     INSERT INTO $tableName (id, name, seller, rating, image, isFavorite) 
     VALUES (?, ?, ?, ?, ?, ?);
-    ''', [product.id, product.name, product.seller, product.rating, product.image, product.isFavorite]);
-
+    ''', [
+      product.id,
+      product.name,
+      product.seller,
+      product.rating,
+      product.image,
+      product.isFavorite
+    ]);
   }
 
   Future<void> handleFavoriteProducts() async {
     deleteFavorites();
-    
+
     await data_lib.dataContext.getFavorites().then((value) => {
           for (Product product in value)
             {insertFavoriteProduct(product: product)}
@@ -49,6 +55,28 @@ class FavoritesDB {
     } catch (e) {
       return [];
     }
+  }
+
+  Future<dynamic> fetchFavoriteProduct(id) async {
+    final database = await data_lib.liteContext.dataBase;
+
+    final products = await database.rawQuery('''
+    SELECT * FROM $tableName WHERE ID = ?;''', [id]);
+
+    try {
+      return products
+          .map((product) => Product.fromSqfliteDatabase(product)).firstOrNull;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<void> deleteFavorite(id) async {
+    final database = await data_lib.liteContext.dataBase;
+
+    await database.rawDelete('''
+    DELETE FROM $tableName WHERE ID = ?
+    ''', [id]);
   }
 
   Future<void> deleteFavorites() async {
