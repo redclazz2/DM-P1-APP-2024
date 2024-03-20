@@ -17,7 +17,7 @@ abstract class ProductWidget extends StatelessWidget {
     );
   }
 
-  void onFavoriteButtonPressed() {
+  void onFavoriteButtonPressed(){
     if (!product.isFavorite) {
       data_lib.favoritesDB.fetchFavoriteProduct(product.id).then((value) => {
             if (value == null)
@@ -32,8 +32,11 @@ abstract class ProductWidget extends StatelessWidget {
                         isFavorite: true))
               }
           });
+      
+      data_lib.dataContext.createFavorite(product.id);
     } else {
       data_lib.favoritesDB.deleteFavorite(product.id);
+      data_lib.dataContext.deleteFavorite(product.id);
     }
   }
 

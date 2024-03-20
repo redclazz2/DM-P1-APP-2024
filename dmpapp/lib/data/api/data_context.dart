@@ -25,22 +25,19 @@ class DataContext {
       final http.Response respuesta =
           await http.get(Uri.parse("${url}api/Products"), headers: {
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization':
-            'bearer ${await data_lib.usersDB.getUserToken()}'
+        'Authorization': 'bearer ${await data_lib.usersDB.getUserToken()}'
       });
 
       List<dynamic> jsonDecoded = await json.decode(respuesta.body);
 
       for (var p in jsonDecoded) {
-        data.add(
-          Product(
-              id: p["id"],
-              name: p["name"],
-              seller: p["seller"],
-              rating: (p["rating"] as num).toDouble(),
-              image: "$url${p["image"]}",
-              isFavorite: false
-              ));
+        data.add(Product(
+            id: p["id"],
+            name: p["name"],
+            seller: p["seller"],
+            rating: (p["rating"] as num).toDouble(),
+            image: "$url${p["image"]}",
+            isFavorite: false));
       }
     } catch (e) {
       data = [];
@@ -51,33 +48,66 @@ class DataContext {
   Future<List<Product>> getFavorites() async {
     List<Product> data = [];
     String token = await data_lib.usersDB.getUserToken();
-    String roleKey = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
-    Map<String,dynamic> decodedToken = JwtDecoder.decode(token);
+    String roleKey =
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
 
     try {
-      final http.Response respuesta =
-          await http.get(Uri.parse("${url}api/Products/${decodedToken[roleKey]}"), headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization':
-            'bearer $token'
-      });
+      final http.Response respuesta = await http.get(
+          Uri.parse("${url}api/Products/${decodedToken[roleKey]}"),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'bearer $token'
+          });
 
       List<dynamic> jsonDecoded = await json.decode(respuesta.body);
 
       for (var p in jsonDecoded) {
-        data.add(
-          Product(
-              id: p["id"],
-              name: p["name"],
-              seller: p["seller"],
-              rating: (p["rating"] as num).toDouble(),
-              image: "$url${p["image"]}",
-              isFavorite: true
-              ));
+        data.add(Product(
+            id: p["id"],
+            name: p["name"],
+            seller: p["seller"],
+            rating: (p["rating"] as num).toDouble(),
+            image: "$url${p["image"]}",
+            isFavorite: true));
       }
     } catch (e) {
       data = [];
     }
     return data;
+  }
+
+  void createFavorite(productId) async {
+    String token = await data_lib.usersDB.getUserToken();
+    String roleKey =
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+
+    await http.post(Uri.parse("${url}api/Products/Favorite"), 
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'bearer $token'
+    },
+    body: jsonEncode({
+      'userId': decodedToken[roleKey],
+      'productId': productId
+    }));
+  }
+
+  void deleteFavorite(productId) async{
+    String token = await data_lib.usersDB.getUserToken();
+    String roleKey =
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+
+    await http.delete(Uri.parse("${url}api/Products/Favorite"), 
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'bearer $token'
+    },
+    body: jsonEncode({
+      'userId': decodedToken[roleKey],
+      'productId': productId
+    }));
   }
 }

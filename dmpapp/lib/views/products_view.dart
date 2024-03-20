@@ -50,11 +50,7 @@ class _ProductViewState extends State<ProductView> {
             onPressed: () {
               setState(() {
                 fromFavorites *= -1;
-                if (fromFavorites == 1) {
-                  title = "Favorites";
-                } else {
-                  title = "Featured";
-                }
+                title = fromFavorites == 1 ? "Favorites" : "Featured";
                 handleTokenValidation();
               });
             },
