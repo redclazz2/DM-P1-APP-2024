@@ -6,12 +6,15 @@ import '../product_widgets/product_widget_grid.dart';
 
 abstract class ProductsWidget extends StatelessWidget {
   final List<Product> products;
+  final Function refresh;
 
-  const ProductsWidget({required this.products, super.key});
+  const ProductsWidget({required this.products, 
+    required this.refresh, 
+    super.key});
 }
 
 class ProductsWidgetList extends ProductsWidget {
-  const ProductsWidgetList({required super.products, super.key});
+  const ProductsWidgetList({required super.products, required super.refresh, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +22,12 @@ class ProductsWidgetList extends ProductsWidget {
         separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemCount: products.length,
         itemBuilder: (BuildContext context, index) =>
-            ProductWidgetList(product: products[index]));
+            ProductWidgetList(product: products[index], refresh: refresh,));
   }
 }
 
 class ProductsWidgetGrid extends ProductsWidget {
-  const ProductsWidgetGrid({required super.products, super.key});
+  const ProductsWidgetGrid({required super.products, required super.refresh, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class ProductsWidgetGrid extends ProductsWidget {
         spacing: 2,
         children: [
         for (var i = 0; i < products.length; i++)
-          ProductWidgetGrid(product: products[i])
+          ProductWidgetGrid(product: products[i], refresh: refresh,)
       ]),
     ));
   }

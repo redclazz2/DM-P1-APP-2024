@@ -5,8 +5,9 @@ import '../../libraries/data_lib.dart' as data_lib;
 abstract class ProductWidget extends StatelessWidget {
   final Product product;
   final double colorRatingLimit = 3.6;
+  final Function refresh;
 
-  const ProductWidget({required this.product, super.key});
+  const ProductWidget({required this.product, required this.refresh,super.key});
 
   Widget setButtonIcon(context) {
     return Icon(
@@ -37,6 +38,7 @@ abstract class ProductWidget extends StatelessWidget {
     } else {
       data_lib.favoritesDB.deleteFavorite(product.id);
       data_lib.dataContext.deleteFavorite(product.id);
+      refresh();
     }
   }
 

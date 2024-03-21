@@ -3,6 +3,9 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../libraries/data_lib.dart' as data_lib;
 
+//SQLite CRUD BASED ON: https://www.youtube.com/watch?v=9kbt4SBKhm0&t=257s
+//HeyFlutter.com - Flutter SQL Database Storage Using SQLite & Sqflite CRUD - Youtube
+
 class LiteContext{
   Database? _dataBase;
 

@@ -2,7 +2,7 @@ import 'package:dmpapp/widgets/product_widgets/product_widget.dart';
 import 'package:flutter/material.dart';
 
 class ProductWidgetList extends ProductWidget {
-  const ProductWidgetList({required super.product, super.key});
+  const ProductWidgetList({required super.product,required super.refresh, super.key});
 
   @override
   Widget build(BuildContext context) {
